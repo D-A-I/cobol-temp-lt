@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# グループ一覧
+# group_name : gid
+GROUPS_TXT=lt-groups.txt
+cat << EOS > ${GROUPS_TXT}
+1-d:1001
+cobolist:1002
+EOS
+
+# ユーザ一覧
+# user_name : uid : group_name
+USERS_TXT=lt-users.txt
+cat << EOS > ${USERS_TXT}
+dai:1001:1-d
+meister:1002:cobolist
+EOS
+
+function make_groups() {
+    local _line
+    while read _line; do
+        local _name=$(echo $_line | cut -d: -f1)
+        local _id=$(echo $_line | cut -d: -f2)
+        # グループ追加
+        groupadd -g $_id $_name
+    done < ${GROUPS_TXT}
+}
+
+function make_users() {
+    local _line
+    while read _line; do
+        local _name=$(echo $_line | cut -d: -f1)
+        local _id=$(echo $_line | cut -d: -f2)
+        local _gname=$(echo $_line | cut -d: -f3)
+        # ユーザ追加
+        useradd -u $_id -g $_gname -m $_name
+    done < ${USERS_TXT}
+}
+
+make_groups
+make_users
+
+# 後始末
+rm ${GROUPS_TXT} ${USERS_TXT}
