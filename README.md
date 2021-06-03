@@ -13,3 +13,9 @@ docker build --no-cache -t permission-lt .
 ```bash
 docker run -it permission-lt /bin/bash
 ```
+
+### ユーザの切り替え
+
+```bash
+su meister
+```
