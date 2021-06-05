@@ -1,5 +1,8 @@
 # permission-lt
 
+ファイルパーミッションのLT用資材  
+[こちら](https://github.com/D-A-I/cobol-template)の続編
+
 ## 使い方
 
 ### ビルド
